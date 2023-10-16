@@ -1,4 +1,5 @@
 import React from "react";
+import ChildrenComponent from "../children-component/ChildrenComponent";
 
 interface StateType { 
   text: string;
@@ -21,8 +22,8 @@ interface StateType {
   }
 
 
-  handleInput(event: any) {
-    const text = event.target.value;
+  handleInput(event: React.FormEvent<HTMLInputElement>) {
+    const text = event.currentTarget.value;
     this.setState(() => { return { text, list: this.state.list }; });
   }
 
@@ -60,7 +61,7 @@ interface StateType {
           <input type="text" name="inputText" id="inputText" onInput={this.handleInput} onBlur={this.handleBlur} />
           <button type="button" onClick={this.handleSubmit}>Submit</button>
         </form>
-        <div>List in state:{this.state.list.map((item, index) => <p className="list-item" key={index}>{item}</p>)}</div>
+        <div>List in state:{this.state.list.map((item, index) => <ChildrenComponent key={index} content={item} />)}</div>
       </div>
     );
   }
