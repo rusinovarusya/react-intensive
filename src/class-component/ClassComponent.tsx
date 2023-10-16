@@ -8,17 +8,23 @@ interface StateType { text: string };
     this.state = { text: "" };
 
     console.log("constructor");
+
+    this.handleInput = this.handleInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    this.setState((state, props) => {
-      return { text: state.text + "some text" };
-    });
+  handleInput(event: any) {
+    const text = event.target.value;
+    this.setState(() => { return { text }; });
+  }
 
+  handleSubmit() {}
+
+  componentDidMount() {
     console.log("componentDidMount");
   }
 
-  componentDidUpdate(/*prevProps, prevState, snapshot*/) {
+  componentDidUpdate(prevProps: {}, prevState: StateType) {
     console.log("componentDidUpdate");
   }
 
@@ -31,8 +37,8 @@ interface StateType { text: string };
       <div className="class-component">
         text: {this.state.text}
         <form>
-          <input type="text" name="inputText" id="inputText" />
-          <button type="submit">Submit</button>
+          <input type="text" name="inputText" id="inputText" onInput={this.handleInput} />
+          <button type="button" onClick={this.handleSubmit}>Submit</button>
         </form>
       </div>
     );
