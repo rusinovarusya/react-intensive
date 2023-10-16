@@ -1,5 +1,6 @@
 import React from "react";
-import ChildrenComponent from "../children-component/ChildrenComponent";
+import List from "../list/List";
+import Item from "../item/Item";
 
 interface StateType { 
   text: string;
@@ -61,7 +62,7 @@ interface StateType {
           <input type="text" name="inputText" id="inputText" onInput={this.handleInput} onBlur={this.handleBlur} />
           <button type="button" onClick={this.handleSubmit}>Submit</button>
         </form>
-        <div>List in state:{this.state.list.map((item, index) => <ChildrenComponent key={index} content={item} />)}</div>
+        <List>{this.state.list.map((item, index) => <Item key={index} content={item}/>)}</List>
       </div>
     );
   }
