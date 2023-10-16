@@ -1,11 +1,18 @@
 import React from "react";
 
-interface StateType { text: string };
+interface StateType { 
+  text: string;
+  list: string[]; 
+};
+
 
   class ClassComponent extends React.Component<{}, StateType> {  
   constructor(props: any) {
     super(props);
-    this.state = { text: "" };
+    this.state = { 
+      text: "",
+      list: []
+    };
 
     console.log("constructor");
 
@@ -13,12 +20,25 @@ interface StateType { text: string };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+
   handleInput(event: any) {
     const text = event.target.value;
-    this.setState(() => { return { text }; });
+    this.setState(() => { return { text, list: this.state.list }; });
   }
 
-  handleSubmit() {}
+  handleBlur = (event: React.FocusEvent<HTMLInputElement, Element>) => {
+    event.target.value = "";
+  }
+
+  handleSubmit() {
+    this.setState((state, props) => {
+      return {
+        text: "",
+        list: [...state.list, state.text]
+      }
+    });
+  }
+
 
   componentDidMount() {
     console.log("componentDidMount");
@@ -35,11 +55,12 @@ interface StateType { text: string };
   render() {
     return (
       <div className="class-component">
-        text: {this.state.text}
+        <div>Current text in state: {this.state.text}</div>
         <form>
-          <input type="text" name="inputText" id="inputText" onInput={this.handleInput} />
+          <input type="text" name="inputText" id="inputText" onInput={this.handleInput} onBlur={this.handleBlur} />
           <button type="button" onClick={this.handleSubmit}>Submit</button>
         </form>
+        <div>List in state:{this.state.list.map((item, index) => <p className="list-item" key={index}>{item}</p>)}</div>
       </div>
     );
   }
