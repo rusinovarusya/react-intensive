@@ -4,7 +4,7 @@ const List: FC<PropsWithChildren<{}>> = ({ children }) => {
   return (
     <>
       <p>List in state:</p>
-      <ul>{children}</ul>
+      <ul className="list-container">{children}</ul>
     </>
   );
 }
