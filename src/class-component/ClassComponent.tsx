@@ -17,22 +17,14 @@ interface StateType {
     };
 
     console.log("constructor");
-
-    this.handleInput = this.handleInput.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
 
-  handleInput(event: React.FormEvent<HTMLInputElement>) {
-    const text = event.currentTarget.value;
-    this.setState(() => { return { text, list: this.state.list }; });
+  handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({text: e.target.value, list: [...this.state.list]});
   }
 
-  handleBlur = (event: React.FocusEvent<HTMLInputElement, Element>) => {
-    event.target.value = "";
-  }
-
-  handleSubmit() {
+  handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     this.setState((state, props) => {
       return {
         text: "",
@@ -40,7 +32,7 @@ interface StateType {
       }
     });
   }
-
+  
 
   componentDidMount() {
     console.log("componentDidMount");
@@ -59,8 +51,8 @@ interface StateType {
       <div className="class-component">
         <div>Current text in state: {this.state.text}</div>
         <form>
-          <input type="text" name="inputText" id="inputText" onInput={this.handleInput} onBlur={this.handleBlur} />
-          <button type="button" onClick={this.handleSubmit}>Submit</button>
+          <input type="text" name="inputText" id="inputText" value={this.state.text} onChange={this.handleInput} />
+          <button type="button" onClick={this.handleSubmit} disabled={this.state.text === "реакт"}>Submit</button>
         </form>
         <List>{this.state.list.map((item, index) => <Item key={index} content={item}/>)}</List>
       </div>
